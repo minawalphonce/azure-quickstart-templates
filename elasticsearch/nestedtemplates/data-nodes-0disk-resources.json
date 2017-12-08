@@ -74,6 +74,10 @@
       "properties": {
         "platformUpdateDomainCount": 20,
         "platformFaultDomainCount": 3
+      }, 
+      "tags": {
+        "es" : "",
+        "es-data" : ""
       }
     },
     {
@@ -98,6 +102,10 @@
             }
           }
         ]
+      }, 
+      "tags": {
+        "es" : "",
+        "es-data" : ""
       }
     },
     {
@@ -164,7 +172,11 @@
             }
           }
         }
-      ]
+      ],
+      "tags": {
+        "es" : "",
+        "es-data" : ""
+      }
     }
   ]
 }

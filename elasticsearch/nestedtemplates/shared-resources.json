@@ -69,7 +69,11 @@
         "name": "Standard_LRS"
       },
       "kind": "Storage",
-      "location": "[resourceGroup().location]"
+      "location": "[resourceGroup().location]", 
+      "tags": {
+        "es" : "",
+        "es-shared" : ""
+      }
     },
     {
       "type": "Microsoft.Storage/storageAccounts",
@@ -79,7 +83,11 @@
         "name": "Standard_LRS"
       },
       "kind": "Storage",
-      "location": "[resourceGroup().location]"
+      "location": "[resourceGroup().location]",
+      "tags": {
+        "es" : "",
+        "es-shared" : ""
+      }
     },
     {
       "type": "Microsoft.Storage/storageAccounts",
@@ -93,6 +101,10 @@
       "copy": {
         "name": "storageLoop",
         "count": "[parameters('storageSettings').count]"
+      }, 
+      "tags": {
+        "es" : "",
+        "es-shared" : ""
       }
     },
     {
@@ -102,6 +114,10 @@
       "location": "[resourceGroup().location]",
       "properties": {
         "publicIPAllocationMethod": "Static"
+      }, 
+      "tags": {
+        "es" : "",
+        "es-shared" : ""
       }
     },
     {
@@ -135,6 +151,10 @@
             }
           }
         ]
+      }, 
+      "tags": {
+        "es" : "",
+        "es-shared" : ""
       }
     },
     {
@@ -163,8 +183,8 @@
                 "id": "[concat(resourceId('Microsoft.Network/loadBalancers', 'es-load-balancer'), '/backendAddressPools/LBBE')]"
               },
               "protocol": "Tcp",
-              "frontendPort": 9200,
-              "backendPort": 9200,
+              "frontendPort": 80,
+              "backendPort": 80,
               "enableFloatingIP": false,
               "idleTimeoutInMinutes": 5,
               "probe": {
@@ -194,12 +214,16 @@
             "name": "es-tcp-probe",
             "properties": {
               "protocol": "Tcp",
-              "port": 9200,
+              "port": 80,
               "intervalInSeconds": 30,
               "numberOfProbes": 3
             }
           }
         ]
+      },
+      "tags": {
+        "es" : "",
+        "es-shared" : ""
       }
     }
   ]

@@ -71,7 +71,11 @@
       "type": "Microsoft.Compute/availabilitySets",
       "name": "es-client-set",
       "location": "[resourceGroup().location]",
-      "properties": {}
+      "properties": {}, 
+      "tags": {
+        "es" : "",
+        "es-client" : ""
+      }
     },
     {
       "apiVersion": "2016-03-30",
@@ -95,6 +99,10 @@
             }
           }
         ]
+      },
+      "tags": {
+        "es" : "",
+        "es-client" : ""
       }
     },
     {
