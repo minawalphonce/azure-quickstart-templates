@@ -69,7 +69,8 @@
       "name": "[variables('storageName')]",
       "location": "[resourceGroup().location]",
       "tags": {
-        "displayName": "StorageAccount"
+        "displayName": "StorageAccount",
+        "elk" : "elk"
       },
       "properties": {
         "accountType": "[variables('storageAccountType')]"
@@ -81,7 +82,10 @@
       "name": "[variables('publicIPAddressName')]",
       "location": "[resourceGroup().location]",
       "properties": {
-        "publicIPAllocationMethod": "[variables('publicIPAddressType')]"
+        "publicIPAllocationMethod": "[variables('publicIPAddressType')]",
+      },
+      "tags" : {
+        "elk" : "elk"
       }
     },
     {
@@ -90,7 +94,8 @@
       "name": "[variables('availabilitySetName')]",
       "location": "[resourceGroup().location]",
       "tags": {
-        "displayName": "AvailabilitySet"
+        "displayName": "AvailabilitySet",
+        "elk" : "elk"
       }
     },
     {
@@ -115,6 +120,9 @@
             }
           }
         ]
+      },
+      "tags" : {
+        "elk" : "elk"
       }
     },
     {
@@ -126,7 +134,8 @@
         "[concat('Microsoft.Network/networkSecurityGroups/', variables('JBNSGName'))]"
       ],
       "tags": {
-        "displayName": "VirtualNetwork"
+        "displayName": "VirtualNetwork",
+        "elk" : "elk"
       },
       "properties": {
         "addressSpace": {
@@ -159,7 +168,8 @@
       "name": "[concat(parameters('vmPrefix'), variables('networkInterfaceName'), copyindex())]",
       "location": "[resourceGroup().location]",
       "tags": {
-        "displayName": "NetworkInterface"
+        "displayName": "NetworkInterface",
+        "elk" : "elk"
       },
       "copy": {
         "name": "nicLoop",
@@ -193,7 +203,8 @@
       },
       "location": "[resourceGroup().location]",
       "tags": {
-        "displayName": "VirtualMachines"
+        "displayName": "VirtualMachines",
+        "elk" : "elk"
       },
       "dependsOn": [
         "[concat('Microsoft.Storage/storageAccounts/', variables('storageName'))]",
@@ -221,7 +232,7 @@
           },
           "osDisk": {
             "name": "osdisk",
-            "vhd": {
+            "vhd": 
               "uri": "[concat('http://',variables('storageName'),'.blob.core.windows.net/vhds/','osdisk', copyindex(), '.vhd')]"
             },
             "caching": "ReadWrite",
@@ -247,6 +258,9 @@
             }
           ]
         }
+      },
+      "tags" : {
+    "elk" : "elk"
       }
     },
     {
@@ -270,6 +284,9 @@
           "fileUris": "[variables('installScripts')]",
           "commandToExecute": "[concat('python ',variables('elasticScript'), ' ', variables('clusterName'), ' ', variables('numberOfNodes'), ' ', variables('storageName'), ' ', listKeys(resourceId('Microsoft.Storage/storageAccounts',variables('storageName')) ,variables('apiVersion')).key1)]"
         }
+      },
+      "tags" : {
+        "elk" : "elk"
       }
     },
     {
@@ -278,7 +295,8 @@
       "name": "JumpboxNic",
       "location": "[resourceGroup().location]",
       "tags": {
-        "displayName": "NetworkInterface"
+        "displayName": "NetworkInterface",
+        "elk" : "elk"
       },
       "dependsOn": [
         "[concat('Microsoft.Network/virtualNetworks/', variables('virtualNetworkName'))]",
@@ -308,7 +326,8 @@
       "name": "Jumpbox",
       "location": "[resourceGroup().location]",
       "tags": {
-        "displayName": "VirtualMachines"
+        "displayName": "VirtualMachines",
+        "elk" : "elk"
       },
       "dependsOn": [
         "[concat('Microsoft.Storage/storageAccounts/', variables('storageName'))]",
@@ -365,6 +384,9 @@
           "commandToExecute": "[concat('powershell.exe -ExecutionPolicy Unrestricted -File ', variables('jumpboxScript'))]"
         }
       }
+    },
+    "tags" : {
+      "elk" : "elk"
     }
   ],
   "outputs": {
